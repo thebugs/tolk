@@ -16,8 +16,14 @@ module Tolk
       end
 
       def read_primary_locale_file
-        primary_file = "#{self.locales_config_path}/#{self.primary_locale_name}.yml"
-        File.exists?(primary_file) ? flat_hash(YAML::safe_load(IO.read(primary_file))[self.primary_locale_name]) : {}
+        primary_locale = {}
+
+        Dir[Rails.root.join("#{self.locales_config_path}/*.yml")].each do |locale_file|
+          content = YAML::load(File.read locale_file).delete self.primary_locale_name
+          primary_locale.merge! content if content
+        end
+
+        flat_hash primary_locale
       end
 
       def flat_hash(data, prefix = '', result = {})
