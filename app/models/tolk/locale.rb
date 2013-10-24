@@ -48,7 +48,7 @@ module Tolk
       end
 
       def secondary_locales
-        all - [primary_locale]
+        where('name != ?', self.primary_locale_name).order(:name)
       end
 
       def dump_all(to = self.locales_config_path, exporter = Tolk::Export)
