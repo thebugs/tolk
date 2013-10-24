@@ -16,10 +16,10 @@ class ImportTest < ActiveSupport::TestCase
     Tolk::Locale.primary_locale(true)
   end
 
-  test "skips gem translations files (xxx.en.yml)" do
+  test "loads translations files with separators in name (xxx.en.yml)" do
     Tolk::Locale.sync!
     Tolk::Locale.import_secondary_locales
 
-    assert_equal 0, Tolk::Phrase.where(key: 'gem_hello_world').count
+    assert_equal 1, Tolk::Phrase.where(key: 'gem_hello_world').count
   end
 end
