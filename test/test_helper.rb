@@ -16,8 +16,8 @@ Rails.backtrace_cleaner.remove_silencers!
 
 # Configure capybara for integration testing
 require "capybara/rails"
-Capybara.default_driver   = :selenium
 Capybara.default_selector = :css
+Capybara.javascript_driver = :webkit
 
 # Run any available migrations
 # A bit of hacks, find a nicer way
